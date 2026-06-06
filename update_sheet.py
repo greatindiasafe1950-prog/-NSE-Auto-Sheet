@@ -8,6 +8,16 @@ from datetime import datetime, timedelta
 import os
 import json
 
+gcp_credentials = os.getenv('GCP_CREDENTIALS')
+
+if not gcp_credentials:
+    raise ValueError("GCP_CREDENTIALS environment variable is not set")
+
+try:
+    credentials_dict = json.loads(gcp_credentials)
+except json.JSONDecodeError as e:
+    raise ValueError(f"GCP_CREDENTIALS is not valid JSON: {e}")
+
 # 1. Credentials Setup
 creds_json = os.environ.get('GCP_CREDENTIALS')
 creds_dict = json.loads(creds_json)
